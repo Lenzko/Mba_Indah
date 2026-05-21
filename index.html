@@ -123,12 +123,13 @@
 
     .game-area{
       width:100%;
-      height:600px;
+      min-height:600px;
       background:rgba(255,255,255,0.3);
       border-radius:25px;
       margin-top:25px;
       position:relative;
       overflow:hidden;
+      padding:20px;
     }
 
     .flower{
@@ -141,12 +142,13 @@
 
     .finish-animation{
       width:100%;
-      height:100%;
+      min-height:100%;
       display:flex;
       flex-direction:column;
       justify-content:center;
       align-items:center;
       animation:fadeIn 1s ease;
+      padding:30px 20px;
     }
 
     .big-flower{
@@ -162,6 +164,24 @@
     .finish-animation p{
       text-align:center;
       max-width:500px;
+      line-height:2;
+      margin-top:15px;
+      margin-bottom:10px;
+    }
+
+    .petal{
+      position:absolute;
+      top:-20px;
+      font-size:1.5rem;
+      animation:fall linear forwards;
+      pointer-events:none;
+    }
+
+    @keyframes fall{
+      to{
+        transform:translateY(700px) rotate(360deg);
+        opacity:0;
+      }
     }
 
     @keyframes bloom{
@@ -236,11 +256,15 @@
       }
 
       .game-area{
-        height:320px;
+        min-height:420px;
       }
 
       .big-flower{
         font-size:4.5rem;
+      }
+
+      .finish-animation p{
+        text-align:center;
       }
 
     }
@@ -261,7 +285,7 @@
 
     <p style="text-align:center;">
       Sebuah pesan kecil untuk seseorang
-      yang telah membimbing saya selama masa magang✨.
+      yang telah membimbing saya selama masa magang ✨
     </p>
 
     <button onclick="scrollToMessage()">
@@ -289,7 +313,10 @@
       Aku sangat bersyukur bisa belajar
       dari mba Indah yang sabar dan suportif.
       Banyak pengalaman dan pelajaran berharga
-      yang ngga akan terlupakan. Makasih juga udah sering berbagi banyak jajan hehe...
+      yang ngga akan terlupakan.
+      Makasih juga karena sudah banyak berbagi cerita,
+      pengalaman, dan hal-hal kecil yang membuat
+      masa magang terasa menyenangkan 🌸
     </p>
 
     <p>
@@ -336,7 +363,7 @@
 
     <div class="game-area" id="gameArea"></div>
 
-    <button onclick="startGame()">
+    <button id="startBtn" onclick="startGame()">
       Mulai Game 🎮
     </button>
 
@@ -391,6 +418,8 @@ function startGame(){
 
   document.getElementById('gameArea').innerHTML = '';
 
+  document.getElementById('startBtn').style.display = 'none';
+
   gameInterval = setInterval(createFlower, 700);
 
 }
@@ -407,8 +436,8 @@ function createFlower(){
 
   const gameArea = document.getElementById('gameArea');
 
-  const maxX = gameArea.clientWidth - 50;
-  const maxY = gameArea.clientHeight - 50;
+  const maxX = gameArea.clientWidth - 60;
+  const maxY = gameArea.clientHeight - 60;
 
   flower.style.left = Math.random() * maxX + 'px';
   flower.style.top = Math.random() * maxY + 'px';
@@ -459,12 +488,33 @@ function showFinishAnimation(){
       <p>
         Terima kasih sudah menjadi mentor
         yang luar biasa selama masa magang 🌷
-        Assalamualaikum, Jazakillah Khairan mba Indah🌸
+      </p>
+
+      <p class="highlight">
+        Assalamualaikum,
+        Jazakillah Khairan mba Indah 🌸
       </p>
 
     </div>
 
   `;
+
+  for(let i=0;i<20;i++){
+
+    const petal = document.createElement('div');
+
+    petal.classList.add('petal');
+
+    petal.innerHTML = '🌸';
+
+    petal.style.left = Math.random() * 100 + '%';
+
+    petal.style.animationDuration =
+    (3 + Math.random() * 3) + 's';
+
+    gameArea.appendChild(petal);
+
+  }
 
 }
 
